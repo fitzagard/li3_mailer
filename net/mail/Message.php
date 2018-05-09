@@ -4,6 +4,7 @@ namespace li3_mailer\net\mail;
 
 use RuntimeException;
 use lithium\action\Request;
+use DateTime;
 
 /**
  * A mail message object (RFC 2822).
@@ -383,13 +384,7 @@ class Message extends \lithium\core\Object {
 	 */
 	 public function ensureValidDate() {
 		if (!$this->date) {
-			$this->date = time();
-		}
-		$numeric = is_int($this->date);
-		if (!$numeric || $this->date < 0 || $this->date > 2147483647) {
-			$error = "Invalid date timestamp `{$this->date}` " .
-				"set for `Message`.";
-			throw new RuntimeException($error);
+			$this->date = new DateTime();
 		}
 	 }
 

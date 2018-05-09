@@ -115,14 +115,14 @@ class Swift extends \li3_mailer\net\mail\Transport {
 		}
 		switch ($type) {
 			case 'mail':
-				$transport = Swift_MailTransport::newInstance();
-			break;
+				$transport = new Swift_MailTransport();
+				break;
 			case 'sendmail':
-				$transport = Swift_SendmailTransport::newInstance();
-			break;
+				$transport = new Swift_SendmailTransport();
+				break;
 			case 'smtp':
-				$transport = Swift_SmtpTransport::newInstance();
-			break;
+				$transport = new Swift_SmtpTransport();
+				break;
 			default:
 				$error = "Unknown transport type `{$type}` " .
 					"for `Swift` adapter.";
@@ -136,7 +136,7 @@ class Swift extends \li3_mailer\net\mail\Transport {
 				$transport->$method($value);
 			}
 		}
-		return Swift_Mailer::newInstance($transport);
+		return new Swift_Mailer($transport);
 	}
 
 	/**
@@ -150,7 +150,7 @@ class Swift extends \li3_mailer\net\mail\Transport {
 	 * @return object The translated `Swift_Message` object.
 	 */
 	protected function _message($message) {
-		$swiftMessage = Swift_Message::newInstance();
+		$swiftMessage = new Swift_Message();
 		foreach ($this->_messageProperties as $prop => $translated) {
 			if (is_int($prop)) {
 				$prop = $translated;
@@ -194,7 +194,7 @@ class Swift extends \li3_mailer\net\mail\Transport {
 				$swiftAttachment = Swift_Attachment::fromPath($path);
 			} else {
 				$data = $attachment['data'];
-				$swiftAttachment = Swift_Attachment::newInstance($data);
+				$swiftAttachment = new Swift_Attachment($data);
 			}
 			foreach ($this->_attachmentProperties as $prop => $translated) {
 				if (is_int($prop)) {
