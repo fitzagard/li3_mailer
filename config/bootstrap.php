@@ -16,11 +16,13 @@ Libraries::paths(array('helper' => array_merge(array(
  */
 $existing = Libraries::paths('adapter');
 $key = '{:library}\{:namespace}\{:class}\adapter\{:name}';
-$existing[$key]['libraries'] = array_merge(
-    (array) $existing[$key]['libraries'],
-    (array) 'li3_mailer'
-);
-Libraries::paths(array('adapter' => $existing));
+if (!empty($existing[$key]['libraries'])) {
+	$existing[$key]['libraries'] = array_merge(
+		(array) $existing[$key]['libraries'],
+		(array) 'li3_mailer'
+	);
+	Libraries::paths(array('adapter' => $existing));
+}
 
 /*
  * Ensure the mail template resources path exists.
